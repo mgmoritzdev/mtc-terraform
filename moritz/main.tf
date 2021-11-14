@@ -25,7 +25,7 @@ resource "docker_image" "nodered_image" {
 }
 
 resource "docker_container" "nodered_container" {
-  count = 2
+  count = 1
   name  = join("-", ["nodered", random_string.random[count.index].result])
   image = docker_image.nodered_image.latest
   ports {
