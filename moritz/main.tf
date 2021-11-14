@@ -25,3 +25,10 @@ resource "docker_container" "nodered_container" {
     external = 1880
   }
 }
+
+output "ip_address" {
+  value = join(":", [
+    docker_container.nodered_container.ip_address,
+    docker_container.nodered_container.ports[0].external
+  ])
+}
