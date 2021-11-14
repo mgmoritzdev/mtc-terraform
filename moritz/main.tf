@@ -33,10 +33,6 @@ resource "docker_container" "nodered_container" {
   }
 }
 
-output "nodered_0_ip_address" {
-  value = join(":", [docker_container.nodered_container[0].ip_address, docker_container.nodered_container[0].ports[0].external])
-}
-
-output "nodered_1_ip_address" {
-  value = join(":", [docker_container.nodered_container[1].ip_address, docker_container.nodered_container[1].ports[0].external])
+output "nodered_ip_addresses" {
+  value = [for c in docker_container.nodered_container[*]: join(":", [c.ip_address], c.ports[*]["external"])]
 }
