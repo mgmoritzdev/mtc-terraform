@@ -12,3 +12,7 @@ variable nodered_container_count {
     error_message = "The number of containers must be positive."
   }
 }
+
+variable secret {
+  type = string
+}
