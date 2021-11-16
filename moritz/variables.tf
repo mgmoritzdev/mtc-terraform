@@ -1,6 +1,10 @@
-variable nodered_cointainer_internal_port {
+variable nodered_container_internal_port {
   type    = number
   default = 1880
+}
+
+variable nodered_container_external_ports {
+  type    = list(number)
 }
 
 variable nodered_container_count {
