@@ -26,3 +26,9 @@ resource "docker_container" "nodered_container" {
     external = random_integer.nodered_container_external_port[count.index].result
   }
 }
+
+resource "null_resource" "docker_volume" {
+  provisioner "local-exec" {
+    command = "mkdir -p nodered-vol/ && sudo chown -R 1000:1000 nodered-vol/"
+  }
+}
