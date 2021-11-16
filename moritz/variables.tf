@@ -14,5 +14,6 @@ variable nodered_container_count {
 }
 
 variable secret {
-  type = string
+  type      = string
+  sensitive = true
 }

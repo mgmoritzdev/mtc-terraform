@@ -3,5 +3,6 @@ output "nodered_ip_addresses" {
 }
 
 output "secret_output" {
-  value = var.secret
+  value     = var.secret
+  sensitive = true
 }
