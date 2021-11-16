@@ -1,20 +1,27 @@
+variable "env" {
+  type    = string
+  default = "dev"
+}
+
+variable "image" {
+  type = map
+  default = {
+    dev = "nodered/node-red:latest",
+    prod = "nodered/node-red:latest-minimal"
+  }
+}
+
 variable nodered_container_internal_port {
   type    = number
   default = 1880
 }
 
 variable nodered_container_external_ports {
-  type    = list(number)
+  type = map(list(number))
 }
 
-variable nodered_container_count {
-  type    = number
-  default = 2
-
-  validation {
-    condition = var.nodered_container_count >= 0
-    error_message = "The number of containers must be positive."
-  }
+locals {
+  nodered_container_count =  length(lookup(var.nodered_container_external_ports, var.env))
 }
 
 variable secret {
