@@ -1,8 +1,3 @@
-variable "env" {
-  type    = string
-  default = "dev"
-}
-
 variable "image" {
   type = map
   default = {
@@ -21,8 +16,8 @@ variable nodered_container_external_ports {
 }
 
 locals {
-  nodered_container_count =  length(lookup(var.nodered_container_external_ports, var.env))
-  nodered_container_volume_host_path = "${path.cwd}/nodered-vol/${var.env}"
+  nodered_container_count =  length(lookup(var.nodered_container_external_ports, terraform.workspace))
+  nodered_container_volume_host_path = "${path.cwd}/nodered-vol/${terraform.workspace}"
 }
 
 variable secret {
