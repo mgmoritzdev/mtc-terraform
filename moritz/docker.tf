@@ -21,12 +21,12 @@ resource "docker_container" "nodered_container" {
   }
   volumes {
     container_path = "/data"
-    host_path = "${path.cwd}/nodered-vol"
+    host_path = local.nodered_container_volume_host_path
   }
 }
 
 resource "null_resource" "docker_volume" {
   provisioner "local-exec" {
-    command = "mkdir -p nodered-vol/ && sudo chown -R 1000:1000 nodered-vol/"
+    command = "mkdir -p ${local.nodered_container_volume_host_path} && sudo chown -R 1000:1000 ${local.nodered_container_volume_host_path}"
   }
 }
