@@ -7,14 +7,14 @@ resource "random_string" "nodered_container_sufix" {
   upper   = false
 }
 
-resource "docker_image" "nodered_image" {
-  name = var.image[terraform.workspace]
+module "image" {
+  source = "./image"
 }
 
 resource "docker_container" "nodered_container" {
   count = local.nodered_container_count
   name  = join("-", ["nodered", random_string.nodered_container_sufix[count.index].result])
-  image = docker_image.nodered_image.latest
+  image = module.image.image_out
   ports {
     internal = var.nodered_container_internal_port
     external = var.nodered_container_external_ports[terraform.workspace][count.index]
