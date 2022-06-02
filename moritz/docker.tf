@@ -9,6 +9,7 @@ resource "random_string" "nodered_container_sufix" {
 
 module "image" {
   source = "./image"
+  image_in = var.image[terraform.workspace]
 }
 
 resource "docker_container" "nodered_container" {
