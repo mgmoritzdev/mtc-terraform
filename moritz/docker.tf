@@ -12,18 +12,15 @@ module "image" {
   image_in = var.image[terraform.workspace]
 }
 
-resource "docker_container" "nodered_container" {
+module "container" {
+  source = "./container"
   count = local.nodered_container_count
-  name  = join("-", ["nodered", random_string.nodered_container_sufix[count.index].result])
-  image = module.image.image_out
-  ports {
-    internal = var.nodered_container_internal_port
-    external = var.nodered_container_external_ports[terraform.workspace][count.index]
-  }
-  volumes {
-    container_path = "/data"
-    host_path = local.nodered_container_volume_host_path
-  }
+  name_in = join("-", ["nodered", random_string.nodered_container_sufix[count.index].result])
+  image_in = module.image.image_out
+  internal_port_in = var.nodered_container_internal_port
+  external_port_in = var.nodered_container_external_ports[terraform.workspace][count.index]
+  volume_container_path_in = "/data"
+  volume_host_path_in = local.nodered_container_volume_host_path
 }
 
 resource "null_resource" "docker_volume" {
