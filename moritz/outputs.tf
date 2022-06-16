@@ -8,5 +8,5 @@ output "container_name" {
 }
 
 output "nodered_ip_addresses" {
-  value = module.container[*].ip_addresses
+  value = flatten(module.container[*].ip_addresses)
 }

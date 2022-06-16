@@ -3,5 +3,5 @@ output "ip_addresses" {
 }
 
 output "container_name" {
-  value = docker_container.nodered_container[*].name
+  value = docker_container.nodered_container.name
 }
