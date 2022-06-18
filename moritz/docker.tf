@@ -20,11 +20,4 @@ module "container" {
   internal_port_in = var.nodered_container_internal_port
   external_port_in = var.nodered_container_external_ports[terraform.workspace][count.index]
   volume_container_path_in = "/data"
-  volume_host_path_in = local.nodered_container_volume_host_path
-}
-
-resource "null_resource" "docker_volume" {
-  provisioner "local-exec" {
-    command = "mkdir -p ${local.nodered_container_volume_host_path} && sudo chown -R 1000:1000 ${local.nodered_container_volume_host_path}"
-  }
 }
