@@ -1,28 +1,19 @@
 // https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs
 
-resource "random_string" "nodered_container_sufix" {
-  count   = local.nodered_container_count
-  length  = 4
-  special = false
-  upper   = false
-}
-
-module "nodered_image" {
+module "images" {
   source = "./image"
-  image_in = var.images.nodered[terraform.workspace]
+  for_each = local.deployment
+  image_in = each.value.image
+  # var.images.nodered[terraform.workspace]
 }
 
-module "influxdb_image" {
-  source = "./image"
-  image_in = var.images.influxdb[terraform.workspace]
-}
-
-module "container" {
+module "nodered_container" {
   source = "./container"
-  count = local.nodered_container_count
-  name_in = join("-", ["nodered", random_string.nodered_container_sufix[count.index].result])
-  image_in = module.nodered_image.image_out
-  internal_port_in = var.nodered_container_internal_port
-  external_port_in = var.nodered_container_external_ports[terraform.workspace][count.index]
+  for_each = local.deployment
+  count_in = each.value.container_count
+  name_in = each.key
+  image_in = module.images[each.key].image_out
+  internal_port_in = each.value.internal_port
+  external_port_in = each.value.external_port
   volume_container_path_in = "/data"
 }

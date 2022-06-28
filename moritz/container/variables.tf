@@ -1,8 +1,12 @@
-variable "name_in" {
+variable "image_in" {
   description = "name of container"
 }
 
-variable "image_in" {
+variable "count_in" {
+  description = "number of containers"
+}
+
+variable "name_in" {
   description = "name of image"
 }
 

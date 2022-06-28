@@ -1,12 +1,4 @@
-output "secret_output" {
-  value     = var.secret
-  sensitive = true
-}
-
-output "container_name" {
-  value = module.container[*].container_name
-}
-
-output "nodered_ip_addresses" {
-  value = flatten(module.container[*].ip_addresses)
+output "app_access" {
+  value = [ for x in module.nodered_container[*]: x]
+  description = "The name and socket for each application"
 }
