@@ -18,6 +18,6 @@ variable "external_port_in" {
   description = "container external port"
 }
 
-variable "volume_container_path_in" {
-  description = "volume container path"
+variable "volumes_in" {
+  description = "volumes container paths"
 }

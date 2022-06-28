@@ -28,3 +28,7 @@ variable "secret" {
   type      = string
   sensitive = true
 }
+
+variable "volumes_in" {
+  type = map(list(map(string)))
+}
